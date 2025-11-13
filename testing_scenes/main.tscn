@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://1qs8516s0cq1"]
+
+[ext_resource type="Texture2D" uid="uid://bnd0u2qt45qh0" path="res://icon.svg" id="1_we15v"]
+[ext_resource type="PackedScene" uid="uid://cmhjgvthq2n1f" path="res://src/FPS_player_stateMachine/player.tscn" id="2_we15v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l65i7"]
+albedo_texture = ExtResource("1_we15v")
+uv1_scale = Vector3(0.15, 0.15, 0.15)
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_we15v"]
+
+[sub_resource type="Sky" id="Sky_dgan3"]
+sky_material = SubResource("ProceduralSkyMaterial_we15v")
+
+[sub_resource type="Environment" id="Environment_a4ufa"]
+sky = SubResource("Sky_dgan3")
+ambient_light_source = 3
+
+[node name="main" type="Node3D"]
+
+[node name="terrain" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="floor" type="CSGBox3D" parent="terrain"]
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_l65i7")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 3, -14)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09358, 3, -11.9673)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.37493, 3, 1.45611)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.13637, 1, 1.93742)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a4ufa")
+
+[node name="Player" parent="." instance=ExtResource("2_we15v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

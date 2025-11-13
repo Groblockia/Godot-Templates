@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmhjgvthq2n1f"]
+
+[ext_resource type="Script" uid="uid://dt08q5wjhcjl1" path="res://src/FPS_player_stateMachine/player_script.gd" id="1_rkbax"]
+[ext_resource type="Script" uid="uid://cdiuv1h61kp46" path="res://src/FPS_player_stateMachine/camera_scripts/camera_pivot.gd" id="2_g1dw6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3bjbq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_51yu7"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_rkbax")
+SPEED = null
+SPRINT_SPEED = null
+ACCELERATION_SPEED = null
+DECCELERATION_SPEED = null
+AIR_DECCELERATION_SPEED = null
+JUMP_VELOCITY = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_3bjbq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_51yu7")
+
+[node name="Camera_Controller_Anchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="Interact_ray" type="RayCast3D" parent="Camera_Controller_Anchor"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="camera_pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+top_level = true
+script = ExtResource("2_g1dw6")
+
+[node name="Camera3D" type="Camera3D" parent="camera_pivot"]
+fov = 80.0

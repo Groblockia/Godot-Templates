@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://1qs8516s0cq1"]
+
+[ext_resource type="Texture2D" uid="uid://bnd0u2qt45qh0" path="res://icon.svg" id="1_we15v"]
+[ext_resource type="PackedScene" uid="uid://cmhjgvthq2n1f" path="res://src/FPS_player_stateMachine/player.tscn" id="2_dgan3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l65i7"]
+albedo_texture = ExtResource("1_we15v")
+uv1_triplanar = true
+
+[node name="main" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_l65i7")
+
+[node name="Player" parent="." instance=ExtResource("2_dgan3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

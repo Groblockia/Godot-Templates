@@ -1,0 +1,20 @@
+extends PlayerStateInterface
+
+class_name PlayerFallState
+
+var op: Player
+
+func enter(_prev_state: String = "") -> void:
+	op = state_machine.owner
+	#print("entering fall state")
+
+func physics_update(delta: float) -> void:
+	op.velocity.y -= op.gravity * delta
+	op.move(delta, op.SPEED, op.AIR_DECCELERATION_SPEED)
+	
+	if op.is_on_floor():
+		#if trying to move:
+		if Input.get_vector("forward", "backward", "left", "right") != Vector2.ZERO:
+			state_machine.change_state("player_move")
+		else:
+			state_machine.change_state("player_idle")
