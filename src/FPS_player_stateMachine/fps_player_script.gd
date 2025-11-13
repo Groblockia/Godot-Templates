@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name Player
+class_name FPSPlayer
 
 var player_can_move := true:
 	set(value): 

@@ -5,7 +5,7 @@ class_name PlayerStateMachine
 var states: Dictionary = {}
 var current_state: PlayerStateInterface
 var current_state_name: String = ""
-var owner: Player
+var owner: FPSPlayer
 
 func add_state(name: String, state: PlayerStateInterface) -> void:
 	states[name.to_lower()] = state

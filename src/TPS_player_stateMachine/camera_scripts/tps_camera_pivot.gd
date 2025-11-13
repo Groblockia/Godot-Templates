@@ -9,13 +9,15 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
+		@warning_ignore("unsafe_property_access")
 		motion += event.relative
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
 
 	rotate_y(-deg_to_rad(motion.x) * sensitivity)
 	rotate_object_local(-Vector3.LEFT, -deg_to_rad(motion.y) * sensitivity)
 	motion = Vector2.ZERO
+	

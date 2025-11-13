@@ -1,8 +1,8 @@
-extends PlayerStateInterface
+extends TPSPlayerStateInterface
 
-class_name PlayerSprintState
+class_name TPSPlayerSprintState
 
-var op: Player
+var op: TPSPlayer
 
 func enter(_prev_state: String = "") -> void:
 	op = state_machine.owner

@@ -2,7 +2,7 @@ extends PlayerStateInterface
 
 class_name PlayerFallState
 
-var op: Player
+var op: FPSPlayer
 
 func enter(_prev_state: String = "") -> void:
 	op = state_machine.owner

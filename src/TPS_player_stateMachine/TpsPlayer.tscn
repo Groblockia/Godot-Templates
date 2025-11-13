@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfr6fyo87kq52"]
+
+[ext_resource type="Script" uid="uid://dt08q5wjhcjl1" path="res://src/TPS_player_stateMachine/tps_player_script.gd" id="1_hj2nx"]
+[ext_resource type="Script" uid="uid://cdiuv1h61kp46" path="res://src/TPS_player_stateMachine/camera_scripts/tps_camera_pivot.gd" id="2_0uvhc"]
+[ext_resource type="Script" uid="uid://biqxg2wi4ygv2" path="res://src/TPS_player_stateMachine/camera_scripts/tps_camera_3d.gd" id="3_tomni"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3bjbq"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_51yu7"]
+
+[node name="TpsPlayer" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_hj2nx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_3bjbq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_51yu7")
+
+[node name="camera_pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+script = ExtResource("2_0uvhc")
+
+[node name="Camera3D" type="Camera3D" parent="camera_pivot"]
+fov = 80.0
+script = ExtResource("3_tomni")
+
+[node name="Interact_ray" type="RayCast3D" parent="camera_pivot"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
