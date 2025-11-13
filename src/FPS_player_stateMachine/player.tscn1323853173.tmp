@@ -12,6 +12,12 @@
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_rkbax")
+SPEED = null
+SPRINT_SPEED = null
+ACCELERATION_SPEED = null
+DECCELERATION_SPEED = null
+AIR_DECCELERATION_SPEED = null
+JUMP_VELOCITY = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_3bjbq")

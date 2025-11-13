@@ -20,8 +20,8 @@ var prev_vel: Vector3
 @export var AIR_DECCELERATION_SPEED: float = 1.0
 @export var JUMP_VELOCITY: float = 5.0
 
-@onready var camera_anchor := $Camera_Controller_Anchor
-@onready var interact_ray := $Camera_Controller_Anchor/Interact_ray
+@onready var interact_ray := $camera_pivot/Interact_ray
+@onready var camera_pivot := $camera_pivot
 
 func _ready() -> void:
 	state_machine = PlayerStateMachine.new()
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	if player_can_move:
 		state_machine.physics_update(delta)
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.UP, camera_pivot.rotation.y)
 
 func _input(event: InputEvent) -> void:
 	if player_can_move:
