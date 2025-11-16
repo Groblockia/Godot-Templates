@@ -20,8 +20,8 @@ var prev_vel: Vector3
 @export var AIR_DECCELERATION_SPEED: float = 1.0
 @export var JUMP_VELOCITY: float = 5.0
 
-@onready var interact_ray :RayCast3D = $camera_pivot/Interact_ray
-@onready var camera_pivot :Node3D = $camera_pivot
+
+@onready var head :Node3D = $head
 
 func _ready() -> void:
 	state_machine = TPSPlayerStateMachine.new()
@@ -53,13 +53,13 @@ func _physics_process(delta: float) -> void:
 	if player_can_move:
 		state_machine.physics_update(delta)
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.UP, camera_pivot.rotation.y)
+	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.UP, head.rotation.y)
 
 func _input(event: InputEvent) -> void:
 	if player_can_move:
 		state_machine.handle_input(event)
-	if Input.is_action_just_pressed("interact"):
-		interaction()
+	#if Input.is_action_just_pressed("interact"):
+		#interaction()
 
 func get_current_state() -> String:
 	return state_machine.get_current_state_name()
@@ -69,12 +69,12 @@ func pause_all_movements() -> void:
 	velocity = Vector3(0,0,0)
 	state_machine.change_state("player_idle")
 
-func interaction() -> void:
-	@warning_ignore("unsafe_method_access", "untyped_declaration")
-	var col = interact_ray.get_collider()
-	if col is InteractionArea:
-		@warning_ignore("unsafe_method_access")
-		col.interact(self)
+#func interaction() -> void:
+	#@warning_ignore("unsafe_method_access", "untyped_declaration")
+	#var col = interact_ray.get_collider()
+	#if col is InteractionArea:
+		#@warning_ignore("unsafe_method_access")
+		#col.interact(self)
 
 func move(delta: float, speed: float, accel: float) -> void:
 	velocity.x = lerp(velocity.x, direction.x * speed, delta * accel)

@@ -1,23 +1,35 @@
 extends Node3D
 
-@export var sensitivity: float = 0.05
+#@export_group("FOV")
+#@export var change_fov_on_run : bool
+#@export var normal_fov : float = 75.0
+#@export var run_fov : float = 90.0
+#
+#const CAMERA_BLEND : float = 0.05
 
-var motion: Vector2 = Vector2.ZERO
+@onready var spring_arm : SpringArm3D = $SpringArm3D
+@onready var camera : Camera3D = $SpringArm3D/Camera3D
+@onready var player :TPSPlayer = get_parent()
 
 func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		@warning_ignore("unsafe_property_access")
-		motion += event.relative
+func _unhandled_input(event: InputEvent) -> void:
+	if player.player_can_move:
+		if event is InputEventMouseMotion:
+			@warning_ignore("unsafe_property_access")
+			rotate_y(-event.relative.x * 0.005)
+			@warning_ignore("unsafe_property_access")
+			spring_arm.rotate_x(-event.relative.y * 0.005)
+			spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
 
-
-func _process(_delta: float) -> void:
-	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
-		return
-
-	rotate_y(-deg_to_rad(motion.x) * sensitivity)
-	rotate_object_local(-Vector3.LEFT, -deg_to_rad(motion.y) * sensitivity)
-	motion = Vector2.ZERO
-	
+#func _physics_process(_delta: float) -> void:
+	#if change_fov_on_run:
+		#@warning_ignore("unsafe_method_access")
+		#if owner.is_on_floor():
+			#if Input.is_action_pressed("run"):
+				#camera.fov = lerp(camera.fov, run_fov, CAMERA_BLEND)
+			#else:
+				#camera.fov = lerp(camera.fov, normal_fov, CAMERA_BLEND)
+		#else:
+			#camera.fov = lerp(camera.fov, normal_fov, CAMERA_BLEND)
